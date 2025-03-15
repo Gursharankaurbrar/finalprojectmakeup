@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#000000">
+
+    <!-- Lipstick Icon -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M7,2h2v6H7V2zM6,8h4v4H6V8zM5,12h6v6H5V12z"/>
+
+</vector>
+
