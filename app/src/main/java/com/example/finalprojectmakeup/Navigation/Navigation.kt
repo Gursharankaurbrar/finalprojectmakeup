@@ -3,8 +3,10 @@ package com.example.movieproject.Navigation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 
@@ -15,7 +17,9 @@ import com.example.finalprojectmakeup.R
 
 @Composable
 fun BottomNav(navController: NavController){
-    NavigationBar{
+    NavigationBar(
+        containerColor = Color(0xFF8B1A3C)
+    ){
         var navBackStackEntry = navController.currentBackStackEntryAsState()
         var currentDestination = navBackStackEntry.value?.destination
 
@@ -29,8 +33,11 @@ fun BottomNav(navController: NavController){
                 popUpTo(Destination.Makeup.route)
                 launchSingleTop = true
             } },
-            icon = { Icon(painter = ic_makeup, contentDescription = "Makeup") },
-            label = { Text(text = Destination.Makeup.route) }
+            icon = { Icon(painter = ic_makeup, contentDescription = "Makeup", tint = Color.White) },
+            label = { Text(text = Destination.Makeup.route, color = Color.White) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(0xFFE57373)
+            )
         ) // end makeup
         NavigationBarItem(
             selected = currentDestination?.route == Destination.Search.route,
@@ -38,8 +45,11 @@ fun BottomNav(navController: NavController){
                 popUpTo(Destination.Search.route)
                 launchSingleTop = true
             } },
-            icon = { Icon(painter = ic_search, contentDescription = "Search") },
-            label = { Text(text = Destination.Search.route) }
+            icon = { Icon(painter = ic_search, contentDescription = "Search", tint = Color.White) },
+            label = { Text(text = Destination.Search.route, color = Color.White) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(0xFFE57373)
+            )
         ) // end search
         NavigationBarItem(
             selected = currentDestination?.route == Destination.Watch.route,
@@ -47,9 +57,12 @@ fun BottomNav(navController: NavController){
                 popUpTo(Destination.Watch.route)
                 launchSingleTop = true
             } },
-            icon = { Icon(painter = ic_watch, contentDescription = "Watch Later Screen icon") },
-            label = { Text(text = Destination.Watch.route) }
-        ) // end watch
+            icon = { Icon(painter = ic_watch, contentDescription = "Watch Later Screen icon", tint = Color.White) },
+            label = { Text(text = Destination.Watch.route, color = Color.White) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color(0xFFE57373)
+            )
+        ) // end fav
     }
 }
 
