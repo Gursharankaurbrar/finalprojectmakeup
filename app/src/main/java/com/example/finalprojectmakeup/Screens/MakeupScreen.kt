@@ -80,6 +80,9 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController) {
                 spotColor = Color(0xFF880E4F)
             ),
         shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF8BBD0))
     ) {
         Row(

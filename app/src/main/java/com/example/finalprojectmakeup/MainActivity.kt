@@ -80,7 +80,6 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                 composable(Destination.Authentication.route) {
                     AuthenticationScreen(navController)
                 }
-
                 composable(Destination.Makeup.route){
                     MakeupScreen(modifier, makeupManager, navController)
                 }

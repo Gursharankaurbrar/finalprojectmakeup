@@ -50,6 +50,9 @@ fun AuthenticationScreen(navController: NavController) {
                 containerColor = Color(0xFFFFE4E1)
             ),
             shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            )
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
