@@ -5,4 +5,5 @@ sealed class Destination(val route: String) {
     object Makeup: Destination("Makeup")
     object Search: Destination("Search")
     object Watch : Destination("Favorites")
+    object MakeupDetail : Destination("makeupDetail/{makeupID}")
 }

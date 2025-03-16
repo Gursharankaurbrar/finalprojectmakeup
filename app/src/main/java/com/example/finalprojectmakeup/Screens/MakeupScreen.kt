@@ -163,7 +163,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController) {
 
                 Button(
                     onClick = {
-                        navController.navigate(Destination.Search.route)
+                        navController.navigate("makeupDetail/${product.id}")
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
                     modifier = Modifier.align(Alignment.End)

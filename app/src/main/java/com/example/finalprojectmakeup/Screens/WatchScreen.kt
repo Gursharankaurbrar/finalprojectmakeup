@@ -22,7 +22,7 @@ fun WatchScreen(){
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center),
-            text = "Watch Screen"
+            text = "Favorites Screen"
         )
     }
 }

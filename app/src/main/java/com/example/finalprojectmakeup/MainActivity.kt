@@ -26,10 +26,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.Screens.AuthenticationScreen
+import com.example.finalprojectmakeup.Screens.MakeupDetailScreen
 import com.example.finalprojectmakeup.Screens.MakeupScreen
 import com.example.finalprojectmakeup.Screens.SearchScreen
 import com.example.finalprojectmakeup.Screens.WatchScreen
 import com.example.finalprojectmakeup.api.MakeupManager
+import com.example.finalprojectmakeup.api.model.MakeupDataItem
+import com.example.finalprojectmakeup.api.model.ProductColor
 import com.example.finalprojectmakeup.ui.theme.FinalProjectMakeupTheme
 import com.example.movieproject.Navigation.BottomNav
 
@@ -89,7 +92,43 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                 composable(Destination.Watch.route){
                     WatchScreen()
                 }
-            }}
+                composable(Destination.MakeupDetail.route){
+                    val makeupDataItem =
+                    MakeupDataItem(
+                        apiFeaturedImage = "https://example.com/images/demo-makeup.png",
+                        brand = "Glamorous Glow",
+                        category = "Lipstick",
+                        createdAt = "2025-01-15T10:00:00Z",
+                        currency = "USD",
+                        description = "Makeup Details Screen",
+                        id = 12345,
+                        imageLink = "https://example.com/products/demo-lipstick.png",
+                        name = "Velvet Red Lipstick",
+                        price = "19.99",
+                        priceSign = "$",
+                        productApiUrl = "https://api.example.com/products/12345",
+                        productColors = listOf(
+                            ProductColor(
+                                hexValue = "#B22222",
+                                colourName = "Crimson Red"
+                            ),
+                            ProductColor(
+                                hexValue = "#8B0000",
+                                colourName = "Dark Red"
+                            )
+                        ),
+                        productLink = "https://example.com/products/demo-lipstick",
+                        productType = "lipstick",
+                        rating = 4.5,
+                        tagList = listOf("cruelty-free", "vegan", "long-lasting"),
+                        updatedAt = "2025-03-10T15:00:00Z",
+                        websiteLink = "https://example.com"
+                    )
+
+                    MakeupDetailScreen( makeupDataItem)
+                }
+            }
+        }
     }
 }
 
