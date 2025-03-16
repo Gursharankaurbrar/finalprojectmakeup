@@ -30,13 +30,20 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
+import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.R
 
 
 @Composable
-fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager){
+fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController){
     val makeups = makeupManager.makeupResponse.value
 
     if (makeups.isEmpty()) {
@@ -44,7 +51,7 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager){
     } else {
         LazyColumn {
             items(makeups) { makeup ->
-                MakeupCard(product = makeup)
+                MakeupCard(product = makeup, navController)
             }
         }
     }
@@ -52,9 +59,8 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager){
 
 
 @Composable
-fun MakeupCard(product: MakeupDataItem) {
+fun MakeupCard(product: MakeupDataItem, navController: NavController) {
     val imageUrl = if (!product.apiFeaturedImage.isNullOrEmpty()) {
-        // Prepend "https:" to the URL if it starts with "//"
         if (product.apiFeaturedImage!!.startsWith("//")) {
             "https:${product.apiFeaturedImage}"
         } else {
@@ -73,82 +79,91 @@ fun MakeupCard(product: MakeupDataItem) {
                 shape = RoundedCornerShape(12.dp),
                 spotColor = Color(0xFF880E4F)
             ),
-        shape = RoundedCornerShape(12.dp), // Rounded corners for card
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF8BBD0)) // Darker pink background
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF8BBD0))
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Display product image or default image on the left
             if (!imageUrl.isNullOrEmpty()) {
                 AsyncImage(
                     model = imageUrl,
                     contentDescription = product.name,
                     modifier = Modifier
-                        .width(160.dp) // Increased image width
-                        .height(160.dp) // Increased image height
-                        .padding(end = 16.dp), // Add padding to separate image and details
-                    placeholder = painterResource(R.drawable.default_image), // Placeholder
-                    error = painterResource(R.drawable.default_image) // Error image
+                        .width(160.dp)
+                        .height(160.dp)
+                        .padding(end = 16.dp),
+                    placeholder = painterResource(R.drawable.default_image),
+                    error = painterResource(R.drawable.default_image)
                 )
             } else {
-                // Display default image if no URL is available
                 Image(
                     painter = painterResource(R.drawable.default_image),
                     contentDescription = "Default Image",
                     modifier = Modifier
-                        .width(160.dp) // Increased image width
-                        .height(160.dp) // Increased image height
-                        .padding(end = 16.dp) // Add padding to separate image and details
+                        .width(160.dp)
+                        .height(160.dp)
+                        .padding(end = 16.dp)
                 )
             }
 
-            // Display product details on the right
             Column(
-                modifier = Modifier.weight(1f) // Take remaining space
+                modifier = Modifier.weight(1f)
             ) {
-                // Display Brand
                 Text(
                     text = "Brand: ${product.brand.orEmpty()}",
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFE91E63), // Pink color for headings
+                    color = Color(0xFFE91E63),
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
-                // Display Category
                 Text(
-                    text = "Category: ${product.category.orEmpty()}",
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("Category: ")
+                        }
+                        append(product.category.orEmpty())
+                    },
+
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
-                // Display Price with currency symbol
                 val priceWithSymbol = buildString {
-                    product.priceSign?.let { append(it) } // Add currency symbol
-                    append(product.price.orEmpty()) // Add price
+                    product.priceSign?.let { append(it) }
+                    append(product.price.orEmpty())
                 }
+
                 Text(
-                    text = "Price: $priceWithSymbol",
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("Price: ")
+                        }
+                        append(priceWithSymbol)
+                    },
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
-                // Display Product Type
                 Text(
-                    text = "Product Type: ${product.productType.orEmpty()}",
-                    color = Color.Black,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("Product Type: ")
+                        }
+                        append(product.productType.orEmpty())
+                    },
+                color = Color.Black,
+                modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                // View Details button
                 Button(
                     onClick = {
-                        // Navigate to detail screen
+                        navController.navigate(Destination.Search.route)
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)), // Pink button
-                    modifier = Modifier.align(Alignment.End) // Align button to the right
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
+                    modifier = Modifier.align(Alignment.End)
                 ) {
                     Text("View Details", color = Color.White)
                 }

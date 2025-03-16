@@ -76,7 +76,7 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                 startDestination = Destination.Makeup.route
             ){
                 composable(Destination.Makeup.route){
-                    MakeupScreen(modifier, makeupManager)
+                    MakeupScreen(modifier, makeupManager, navController)
                 }
                 composable(Destination.Search.route){
                     SearchScreen()
