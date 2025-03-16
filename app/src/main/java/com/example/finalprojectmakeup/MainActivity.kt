@@ -25,6 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.finalprojectmakeup.Destinations.Destination
+import com.example.finalprojectmakeup.Screens.AuthenticationScreen
 import com.example.finalprojectmakeup.Screens.MakeupScreen
 import com.example.finalprojectmakeup.Screens.SearchScreen
 import com.example.finalprojectmakeup.Screens.WatchScreen
@@ -73,8 +74,13 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize().background(Color(0xFF8B1A3C))) {
             NavHost(
                 navController = navController,
-                startDestination = Destination.Makeup.route
+                startDestination = Destination.Authentication.route
+
             ){
+                composable(Destination.Authentication.route) {
+                    AuthenticationScreen(navController)
+                }
+
                 composable(Destination.Makeup.route){
                     MakeupScreen(modifier, makeupManager, navController)
                 }

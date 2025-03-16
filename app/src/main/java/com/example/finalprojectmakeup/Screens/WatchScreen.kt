@@ -18,7 +18,7 @@ fun WatchScreen(){
             .background(Color.Cyan)
     ){
         Text(
-            color = Color.White,
+            color = Color.Black,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center),
