@@ -45,6 +45,8 @@ import com.example.finalprojectmakeup.R
 import com.example.finalprojectmakeup.api.db.AppDatabase
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import android.content.Intent
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import coil3.compose.AsyncImage
 
 @Composable
@@ -69,6 +71,7 @@ fun MakeupDetailScreen(
         val shareText = buildString {
             append("Check out this makeup product!\n\n")
             append("Name: ${makeupDataItem.name ?: "N/A"}\n")
+            append("Description: ${makeupDataItem.description ?: "N/A"}\n")
             append("Brand: ${makeupDataItem.brand ?: "N/A"}\n")
             append("Price: ${makeupDataItem.priceSign ?: "$"}${makeupDataItem.price ?: "N/A"}\n")
             append("Type: ${makeupDataItem.productType ?: "N/A"}\n")
@@ -123,7 +126,7 @@ fun MakeupDetailScreen(
                             .padding(end = 16.dp)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_share), // Add your share icon
+                            imageVector = Icons.Default.Share,
                             contentDescription = "Share",
                             tint = Color(0xFFE91E63)
                         )

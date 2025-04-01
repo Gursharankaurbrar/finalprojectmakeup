@@ -125,7 +125,7 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                         }
                     }
                     makeup?.let { item ->
-                        MakeupDetailScreen( makeupDataItem = item, db=db)
+                        MakeupDetailScreen(  makeupDataItem = item, db=db, navController = navController)
                     }
                 }
                 }
