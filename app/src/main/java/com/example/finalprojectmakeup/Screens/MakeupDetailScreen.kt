@@ -80,6 +80,7 @@ fun MakeupDetailScreen(
             }
         }
 
+
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, shareText)
@@ -147,7 +148,7 @@ fun MakeupDetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
-                    .padding(16.dp)
+                    .padding(13.dp)
                     .shadow(
                         elevation = 12.dp,
                         shape = RoundedCornerShape(16.dp),
