@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,10 +41,11 @@ import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.R
+import com.example.finalprojectmakeup.api.db.AppDatabase
 
 
 @Composable
-fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController){
+fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController, db:AppDatabase){
     val makeups = makeupManager.makeupResponse.value
 
     if (makeups.isEmpty()) {
@@ -51,7 +53,7 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
     } else {
         LazyColumn {
             items(makeups) { makeup ->
-                MakeupCard(product = makeup, navController)
+                MakeupCard(product = makeup, navController, db, makeupManager)
             }
         }
     }
@@ -59,7 +61,7 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
 
 
 @Composable
-fun MakeupCard(product: MakeupDataItem, navController: NavController) {
+fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager) {
     val imageUrl = if (!product.apiFeaturedImage.isNullOrEmpty()) {
         if (product.apiFeaturedImage!!.startsWith("//")) {
             "https:${product.apiFeaturedImage}"
@@ -72,6 +74,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController) {
 
     Card(
         modifier = Modifier
+
             .fillMaxWidth()
             .padding(8.dp)
             .shadow(
@@ -162,6 +165,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController) {
                 )
 
                 Button(
+
                     onClick = {
                         navController.navigate("makeupDetail/${product.id}")
                     },
