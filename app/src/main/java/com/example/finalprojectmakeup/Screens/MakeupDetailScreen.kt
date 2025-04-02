@@ -143,7 +143,6 @@ fun MakeupDetailScreen(
                 .verticalScroll(rememberScrollState())
                 .background(Color.White)
         ) {
-            // Product Image
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -269,7 +268,7 @@ fun MakeupDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Button(
-                            onClick = { /* Handle favorite action */ },
+                            onClick = {   },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFE91E63)
                             ),
@@ -280,7 +279,7 @@ fun MakeupDetailScreen(
                         }
 
                         Button(
-                            onClick = { /* Handle buy action */ },
+                            onClick = {  },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFE91E63)
                             ),
