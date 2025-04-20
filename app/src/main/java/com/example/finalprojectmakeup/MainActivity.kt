@@ -73,7 +73,6 @@ class MainActivity : ComponentActivity() {
                     val makeupManager = MakeupManager(db)
 
 
-
                     App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel)
                 }
             }
@@ -88,6 +87,8 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
     var makeup by remember{
         mutableStateOf<MakeupDataItem?>(null)
     }
+
+
 
     val startDestination = if (authViewModel.isUserLoggedIn) {
         Destination.Makeup.route
@@ -104,22 +105,25 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                     fontWeight = FontWeight.Bold
                 )},
                 actions = {
-                    Button(
-                        onClick = {
-                            authViewModel.signOut()
-                            navController.navigate(Destination.Login.route)
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color(0xFFE91E63)
-                        ),
-                        modifier = Modifier
-                            .height(36.dp)
-                            .padding(end = 8.dp)
-                    ) {
-                        Text("Logout", fontWeight = FontWeight.Bold)
+                    if (authViewModel.isUserLoggedIn){
+                        Button(
+                            onClick = {
+                                authViewModel.signOut()
+                                navController.navigate(Destination.Login.route)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.White,
+                                contentColor = Color(0xFFE91E63)
+                            ),
+                            modifier = Modifier
+                                .height(36.dp)
+                                .padding(end = 8.dp)
+                        ) {
+                            Text("Logout", fontWeight = FontWeight.Bold)
+                        }
                     }
-                },
+                    }
+                    ,
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF8B1A3C)
                 )

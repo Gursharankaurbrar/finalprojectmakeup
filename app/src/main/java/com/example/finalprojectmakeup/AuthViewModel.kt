@@ -1,5 +1,8 @@
 package com.example.finalprojectmakeup
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -8,8 +11,16 @@ import com.google.firebase.ktx.Firebase
 class AuthViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
 
-    val isUserLoggedIn: Boolean
-        get() = auth.currentUser != null
+    var isUserLoggedIn by mutableStateOf(false)
+        private set
+
+    init {
+
+        Firebase.auth.addAuthStateListener { firebaseAuth ->
+            isUserLoggedIn = firebaseAuth.currentUser != null
+        }
+    }
+
 
     fun register(
         email: String,
@@ -25,6 +36,7 @@ class AuthViewModel : ViewModel() {
                     onError(task.exception?.message ?: "Registration failed")
                 }
             }
+        isUserLoggedIn = true
     }
 
     fun login(
@@ -41,9 +53,11 @@ class AuthViewModel : ViewModel() {
                     onError(task.exception?.message ?: "Login failed")
                 }
             }
+        isUserLoggedIn = true
     }
 
     fun signOut() {
         auth.signOut()
+
     }
 }
