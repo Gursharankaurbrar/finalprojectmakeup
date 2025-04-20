@@ -20,6 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,12 +32,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.finalprojectmakeup.AuthViewModel
 import com.example.finalprojectmakeup.Destinations.Destination
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthenticationScreen(navController: NavController) {
+fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewModel) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     Box(
         modifier = androidx.compose.ui.Modifier
             .fillMaxSize()
@@ -67,26 +76,10 @@ fun AuthenticationScreen(navController: NavController) {
 
                 Spacer(modifier = androidx.compose.ui.Modifier.height(24.dp))
 
-                TextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text("Name", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
-                    colors = TextFieldDefaults.colors(
-                        cursorColor = Color(0xFFE91E63),
-                        focusedIndicatorColor = Color(0xFF8B0000),
-                        unfocusedIndicatorColor = Color(0x80E91E63),
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.Black,
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    )
-                )
-
-                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = email,
+                    onValueChange = { email = it },
                     label = { Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
@@ -102,8 +95,8 @@ fun AuthenticationScreen(navController: NavController) {
                 Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = password,
+                    onValueChange = { password = it },
                     label = { Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
@@ -120,8 +113,8 @@ fun AuthenticationScreen(navController: NavController) {
                 Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
                     label = { Text("Confirm Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
@@ -135,11 +128,20 @@ fun AuthenticationScreen(navController: NavController) {
                     visualTransformation = PasswordVisualTransformation(),
                 )
 
+                // Error Message
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage!!,
+                        color = Color.Red,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+
                 Spacer(modifier = androidx.compose.ui.Modifier.height(24.dp))
 
                 Button(
                     onClick = {
-                        navController.navigate(Destination.Makeup.route)
+                        navController.navigate(Destination.Login.route)
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFE91E63)
@@ -153,7 +155,18 @@ fun AuthenticationScreen(navController: NavController) {
 
                 Button(
                     onClick = {
-                        navController.navigate(Destination.Makeup.route)
+                        if (email.isBlank() || password.isBlank()) {
+                            errorMessage = "Fields cannot be empty!"
+                        } else if (password != confirmPassword) {
+                            errorMessage = "Passwords do not match!"
+                        } else {
+                            authViewModel.register(
+                                email = email,
+                                password = password,
+                                onSuccess = { navController.navigate(Destination.Makeup.route) },
+                                onError = { error -> errorMessage = error }
+                            )
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF8B0000)

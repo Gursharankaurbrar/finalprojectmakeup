@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,6 +45,8 @@ import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import com.example.finalprojectmakeup.api.model.ProductColor
 import com.example.finalprojectmakeup.ui.theme.FinalProjectMakeupTheme
 import com.example.movieproject.Navigation.BottomNav
+import com.google.firebase.Firebase
+import com.google.firebase.initialize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -53,17 +56,22 @@ import kotlinx.coroutines.withContext
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Firebase.initialize(this)
         enableEdgeToEdge()
         setContent {
             FinalProjectMakeupTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navController = rememberNavController()
 
+                    val authViewModel: AuthViewModel = viewModel()
+
                     val db = AppDatabase.getInstance(applicationContext)
 
                     val makeupManager = MakeupManager(db)
 
-                    App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db)
+
+
+                    App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel)
                 }
             }
         }
@@ -73,9 +81,15 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, makeupManager: MakeupManager, db: AppDatabase){
+fun App(navController: NavHostController, modifier: Modifier, makeupManager: MakeupManager, db: AppDatabase, authViewModel: AuthViewModel){
     var makeup by remember{
         mutableStateOf<MakeupDataItem?>(null)
+    }
+
+    val startDestination = if (authViewModel.isUserLoggedIn) {
+        Destination.Makeup.route
+    } else {
+        Destination.Authentication.route
     }
 
     Scaffold(
@@ -98,14 +112,17 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize().background(Color(0xFF8B1A3C))) {
             NavHost(
                 navController = navController,
-                startDestination = Destination.Login.route
+                startDestination = startDestination
 
             ){
                 composable(Destination.Login.route) {
-                    LoginScreen(navController)
+                    LoginScreen(navController, authViewModel)
+                }
+                composable(Destination.Authentication.route){
+                    AuthenticationScreen(navController, authViewModel)
                 }
                 composable(Destination.Makeup.route){
-                    MakeupScreen(modifier, makeupManager, navController, db)
+                    MakeupScreen(modifier, makeupManager, navController, db, authViewModel)
                 }
                 composable(Destination.Search.route){
                     SearchScreen()

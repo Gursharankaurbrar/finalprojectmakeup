@@ -24,6 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,11 +36,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.finalprojectmakeup.AuthViewModel
 import com.example.finalprojectmakeup.Destinations.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,8 +78,8 @@ fun LoginScreen(navController: NavController) {
 
                 // Email Field
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = email,
+                    onValueChange = { email = it },
                     label = {
                         Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63))
                     },
@@ -90,8 +98,8 @@ fun LoginScreen(navController: NavController) {
 
                 // Password Field
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = password,
+                    onValueChange = { password = it },
                     label = {
                         Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63))
                     },
@@ -109,10 +117,29 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
+
+                // Error Message
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage!!,
+                        color = Color.Red,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+
                 // Login Button
                 Button(
                     onClick = {
-                        navController.navigate(Destination.Makeup.route)
+                        if (email.isBlank() || password.isBlank()) {
+                            errorMessage = "Email and password cannot be empty!"
+                        } else {
+                            authViewModel.login(
+                                email = email,
+                                password = password,
+                                onSuccess = { navController.navigate(Destination.Makeup.route) },
+                                onError = { error -> errorMessage = error }
+                            )
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFE91E63)
@@ -124,13 +151,13 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Optional: "Forgot Password" text button
+
                 Text(
                     text = "Forgot Password?",
                     color = Color(0xFF8B0000),
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.clickable {
-                        /* Handle forgot password */
+
                     }
                 )
 

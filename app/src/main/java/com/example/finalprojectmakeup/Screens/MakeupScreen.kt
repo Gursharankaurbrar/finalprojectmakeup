@@ -39,13 +39,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
+import com.example.finalprojectmakeup.AuthViewModel
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.R
 import com.example.finalprojectmakeup.api.db.AppDatabase
 
 
 @Composable
-fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController, db:AppDatabase){
+fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController, db:AppDatabase, authViewModel: AuthViewModel){
+
     val makeups = makeupManager.makeupResponse.value
 
     if (makeups.isEmpty()) {
