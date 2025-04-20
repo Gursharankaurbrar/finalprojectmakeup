@@ -149,10 +149,11 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                             authViewModel.register(
                                 email = email,
                                 password = password,
-                                onSuccess = {  navController.navigate(Destination.Login.route) {
-                                    popUpTo(Destination.Authentication.route) {
-                                        inclusive = true
-                                    }
+                                onSuccess = {
+                                    navController.currentBackStackEntry?.savedStateHandle?.set("signupSuccess", true)
+
+                                    navController.navigate(Destination.Login.route) {
+
                                     authViewModel.isUserLoggedIn = false
                                 } },
 

@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,8 +45,15 @@ import com.example.finalprojectmakeup.Destinations.Destination
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null)
-    }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    val signupSuccess = navController
+        .previousBackStackEntry
+        ?.savedStateHandle
+        ?.get<Boolean>("signupSuccess") == true
+
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -68,6 +76,19 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                if (signupSuccess) {
+                    Text(
+                        text = "Account created successfully! Please log in!",
+                        color = Color(0xFF388E3C),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFFC8E6C9))
+                            .padding(8.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
                 Text(
                     text = "Welcome Back to GlamGuide",
                     color = Color(0xFFE91E63),

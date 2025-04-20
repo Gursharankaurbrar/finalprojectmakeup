@@ -29,6 +29,7 @@ class AuthViewModel : ViewModel() {
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
+
                 if (task.isSuccessful) {
                     onSuccess()
                 } else {
