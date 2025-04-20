@@ -1,9 +1,11 @@
 package com.example.finalprojectmakeup.Screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +17,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -30,18 +34,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.finalprojectmakeup.Destinations.Destination
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthenticationScreen(navController: NavController) {
+fun LoginScreen(navController: NavController) {
     Box(
-        modifier = androidx.compose.ui.Modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFFC0CB)),
         contentAlignment = Alignment.Center
     ) {
         Card(
-            modifier = androidx.compose.ui.Modifier
+            modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -49,28 +52,29 @@ fun AuthenticationScreen(navController: NavController) {
                 containerColor = Color(0xFFFFE4E1)
             ),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 8.dp
-            )
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Column(
-                modifier = androidx.compose.ui.Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Welcome to GlamGuide",
+                    text = "Welcome Back to GlamGuide",
                     color = Color(0xFFE91E63),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
 
-                Spacer(modifier = androidx.compose.ui.Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
+                // Email Field
                 TextField(
                     value = "",
                     onValueChange = {},
-                    label = { Text("Name", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
+                    label = {
+                        Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63))
+                    },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
                         focusedIndicatorColor = Color(0xFF8B0000),
@@ -82,29 +86,15 @@ fun AuthenticationScreen(navController: NavController) {
                     )
                 )
 
-                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
+                // Password Field
                 TextField(
                     value = "",
                     onValueChange = {},
-                    label = { Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
-                    colors = TextFieldDefaults.colors(
-                        cursorColor = Color(0xFFE91E63),
-                        focusedIndicatorColor = Color(0xFF8B0000),
-                        unfocusedIndicatorColor = Color(0x80E91E63),
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.Black,
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    )
-                )
-
-                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
-
-                TextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
+                    label = {
+                        Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63))
+                    },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
                         focusedIndicatorColor = Color(0xFF8B0000),
@@ -114,29 +104,12 @@ fun AuthenticationScreen(navController: NavController) {
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent
                     ),
-                    visualTransformation = PasswordVisualTransformation(),
+                    visualTransformation = PasswordVisualTransformation()
                 )
 
-                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
-                TextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text("Confirm Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
-                    colors = TextFieldDefaults.colors(
-                        cursorColor = Color(0xFFE91E63),
-                        focusedIndicatorColor = Color(0xFF8B0000),
-                        unfocusedIndicatorColor = Color(0x80E91E63),
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.Black,
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    ),
-                    visualTransformation = PasswordVisualTransformation(),
-                )
-
-                Spacer(modifier = androidx.compose.ui.Modifier.height(24.dp))
-
+                // Login Button
                 Button(
                     onClick = {
                         navController.navigate(Destination.Makeup.route)
@@ -144,23 +117,57 @@ fun AuthenticationScreen(navController: NavController) {
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFE91E63)
                     ),
-                    modifier = androidx.compose.ui.Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Login", color = Color.White)
                 }
 
-                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Optional: "Forgot Password" text button
+                Text(
+                    text = "Forgot Password?",
+                    color = Color(0xFF8B0000),
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.clickable {
+                        /* Handle forgot password */
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    HorizontalDivider(
+                        modifier = Modifier.weight(1f),
+                        color = Color(0x80E91E63)
+                    )
+                    Text(
+                        text = "OR",
+                        color = Color(0xFFE91E63),
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    HorizontalDivider(
+                        modifier = Modifier.weight(1f),
+                        color = Color(0x80E91E63)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
                     onClick = {
-                        navController.navigate(Destination.Makeup.route)
+                        navController.navigate(Destination.Authentication.route)
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF8B0000)
                     ),
-                    modifier = androidx.compose.ui.Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Create Account", color = Color.White)
+                    Text("Create New Account", color = Color.White)
                 }
             }
         }

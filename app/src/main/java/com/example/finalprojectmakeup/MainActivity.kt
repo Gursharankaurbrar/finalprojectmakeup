@@ -33,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.Screens.AuthenticationScreen
+import com.example.finalprojectmakeup.Screens.LoginScreen
 import com.example.finalprojectmakeup.Screens.MakeupDetailScreen
 import com.example.finalprojectmakeup.Screens.MakeupScreen
 import com.example.finalprojectmakeup.Screens.SearchScreen
@@ -97,11 +98,11 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize().background(Color(0xFF8B1A3C))) {
             NavHost(
                 navController = navController,
-                startDestination = Destination.Authentication.route
+                startDestination = Destination.Login.route
 
             ){
-                composable(Destination.Authentication.route) {
-                    AuthenticationScreen(navController)
+                composable(Destination.Login.route) {
+                    LoginScreen(navController)
                 }
                 composable(Destination.Makeup.route){
                     MakeupScreen(modifier, makeupManager, navController, db)

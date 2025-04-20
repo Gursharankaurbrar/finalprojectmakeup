@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
 
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.finalprojectmakeup.Destinations.Destination
@@ -63,6 +64,8 @@ fun BottomNav(navController: NavController){
                 indicatorColor = Color(0xFFE57373)
             )
         ) // end fav
+
+
     }
 }
 
