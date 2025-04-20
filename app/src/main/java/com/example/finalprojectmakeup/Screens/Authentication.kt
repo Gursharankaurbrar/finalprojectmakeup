@@ -137,7 +137,38 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                     )
                 }
 
-                Spacer(modifier = androidx.compose.ui.Modifier.height(24.dp))
+                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
+
+                Button(
+                    onClick = {
+                        if (email.isBlank() || password.isBlank()) {
+                            errorMessage = "Fields cannot be empty!"
+                        } else if (password != confirmPassword) {
+                            errorMessage = "Passwords do not match!"
+                        } else {
+                            authViewModel.register(
+                                email = email,
+                                password = password,
+                                onSuccess = {  navController.navigate(Destination.Login.route) {
+                                    popUpTo(Destination.Authentication.route) {
+                                        inclusive = true
+                                    }
+                                    authViewModel.isUserLoggedIn = false
+                                } },
+
+                                onError = { error -> errorMessage = error }
+                            )
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF8B0000)
+                    ),
+                    modifier = androidx.compose.ui.Modifier.fillMaxWidth()
+                ) {
+                    Text("Create Account", color = Color.White)
+                }
+
+                Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
 
                 Button(
                     onClick = {
@@ -152,29 +183,6 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                 }
 
                 Spacer(modifier = androidx.compose.ui.Modifier.height(12.dp))
-
-                Button(
-                    onClick = {
-                        if (email.isBlank() || password.isBlank()) {
-                            errorMessage = "Fields cannot be empty!"
-                        } else if (password != confirmPassword) {
-                            errorMessage = "Passwords do not match!"
-                        } else {
-                            authViewModel.register(
-                                email = email,
-                                password = password,
-                                onSuccess = { navController.navigate(Destination.Makeup.route) },
-                                onError = { error -> errorMessage = error }
-                            )
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF8B0000)
-                    ),
-                    modifier = androidx.compose.ui.Modifier.fillMaxWidth()
-                ) {
-                    Text("Create Account", color = Color.White)
-                }
             }
         }
     }

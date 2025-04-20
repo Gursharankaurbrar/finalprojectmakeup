@@ -44,7 +44,8 @@ import com.example.finalprojectmakeup.Destinations.Destination
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var errorMessage by remember { mutableStateOf<String?>(null)
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()

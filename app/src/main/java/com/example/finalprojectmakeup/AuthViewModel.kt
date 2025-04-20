@@ -12,7 +12,6 @@ class AuthViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
 
     var isUserLoggedIn by mutableStateOf(false)
-        private set
 
     init {
 
@@ -36,7 +35,7 @@ class AuthViewModel : ViewModel() {
                     onError(task.exception?.message ?: "Registration failed")
                 }
             }
-        isUserLoggedIn = true
+
     }
 
     fun login(
