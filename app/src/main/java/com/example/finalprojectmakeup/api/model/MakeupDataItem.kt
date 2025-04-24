@@ -46,5 +46,6 @@ data class MakeupDataItem(
     @Json(name = "updated_at")
     var updatedAt: String?,
     @Json(name = "website_link")
-    var websiteLink: String?
+    var websiteLink: String?,
+    var isFavorite: Boolean = false
 )

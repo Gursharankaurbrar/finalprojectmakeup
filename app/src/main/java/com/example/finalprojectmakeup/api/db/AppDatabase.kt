@@ -9,7 +9,7 @@ import com.example.finalprojectmakeup.api.model.MakeupDataItem
  * Room Database for the Final Project Makeup application.
  * It provides a local database to store makeup product data.
  **/
-@Database(entities = [MakeupDataItem:: class], version = 1, exportSchema = false)
+@Database(entities = [MakeupDataItem:: class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase(){
 
     /**

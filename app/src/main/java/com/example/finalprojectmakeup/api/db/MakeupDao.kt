@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 
 /**
@@ -30,5 +31,11 @@ interface MakeupDao {
      **/
     @Query("SELECT * FROM makeups")
     fun getAllMakeup(): List<MakeupDataItem>
+
+    /**
+     * Updates the makeup state in database.
+     **/
+    @Update
+    suspend fun updateMakeupState(makeup: MakeupDataItem)
 
 }

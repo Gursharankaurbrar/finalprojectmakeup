@@ -47,7 +47,10 @@ import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import android.content.Intent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import coil3.compose.AsyncImage
+import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 
 
 @Composable
@@ -55,7 +58,8 @@ fun MakeupDetailScreen(
     modifier: Modifier = Modifier,
     makeupDataItem: MakeupDataItem,
     db: AppDatabase,
-    navController: NavController? = null
+    navController: NavController? = null,
+    viewModel: MakeupViewModel
 ) {
     val context = LocalContext.current
     val imageUrl = if (!makeupDataItem.apiFeaturedImage.isNullOrEmpty()) {
@@ -67,6 +71,9 @@ fun MakeupDetailScreen(
     } else {
         null
     }
+
+    val iconState by viewModel.makeupIconState.collectAsState() // Observe state from ViewModel
+    var isIconChanged = iconState[makeupDataItem.id] ?: false // Get the latest state
 
     fun shareProduct() {
         val shareText = buildString {
@@ -269,7 +276,10 @@ fun MakeupDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Button(
-                            onClick = {   },
+                            onClick = {
+                                isIconChanged = !isIconChanged
+                                viewModel.updateMakeupIcon(makeupDataItem.id!!, db)
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFE91E63)
                             ),

@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -47,6 +48,7 @@ import com.example.finalprojectmakeup.api.MakeupManager
 import com.example.finalprojectmakeup.api.db.AppDatabase
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import com.example.finalprojectmakeup.api.model.ProductColor
+import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 import com.example.finalprojectmakeup.ui.theme.FinalProjectMakeupTheme
 import com.example.movieproject.Navigation.BottomNav
 import com.google.firebase.Firebase
@@ -73,8 +75,9 @@ class MainActivity : ComponentActivity() {
 
                     val makeupManager = MakeupManager(db)
 
+                    val viewModel: MakeupViewModel = ViewModelProvider(this)[MakeupViewModel::class.java]
 
-                    App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel)
+                    App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel, viewModel)
                 }
             }
         }
@@ -89,7 +92,8 @@ fun App(
     modifier: Modifier,
     makeupManager: MakeupManager,
     db: AppDatabase,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    viewModel: MakeupViewModel
 ) {
     var makeup by remember {
         mutableStateOf<MakeupDataItem?>(null)
@@ -166,7 +170,7 @@ fun App(
                     AuthenticationScreen(navController, authViewModel)
                 }
                 composable(Destination.Makeup.route) {
-                    MakeupScreen(modifier, makeupManager, navController, db, authViewModel)
+                    MakeupScreen(modifier, makeupManager, navController, db, authViewModel,  viewModel = viewModel)
                 }
                 composable(Destination.Search.route) {
                     SearchScreen()
@@ -189,7 +193,8 @@ fun App(
                         MakeupDetailScreen(
                             makeupDataItem = item,
                             db = db,
-                            navController = navController
+                            navController = navController,
+                            viewModel = viewModel
                         )
                     }
                 }

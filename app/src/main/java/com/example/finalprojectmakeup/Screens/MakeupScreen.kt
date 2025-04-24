@@ -5,9 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,19 +45,30 @@ import com.example.finalprojectmakeup.AuthViewModel
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.R
 import com.example.finalprojectmakeup.api.db.AppDatabase
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 
 
 @Composable
-fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController, db:AppDatabase, authViewModel: AuthViewModel){
+fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController, db:AppDatabase, authViewModel: AuthViewModel, viewModel: MakeupViewModel){
 
     val makeups = makeupManager.makeupResponse.value
+
 
     if (makeups.isEmpty()) {
         Text("No makeup products available")
     } else {
         LazyColumn {
             items(makeups) { makeup ->
-                MakeupCard(product = makeup, navController, db, makeupManager)
+                MakeupCard(product = makeup, navController, db, makeupManager, viewModel)
             }
         }
     }
@@ -63,7 +76,7 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
 
 
 @Composable
-fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager) {
+fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager, viewModel: MakeupViewModel) {
     val imageUrl = if (!product.apiFeaturedImage.isNullOrEmpty()) {
         if (product.apiFeaturedImage!!.startsWith("//")) {
             "https:${product.apiFeaturedImage}"
@@ -74,9 +87,11 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
         null
     }
 
+    val iconState by viewModel.makeupIconState.collectAsState() // Observe state from ViewModel
+    var isFavorite = iconState[product.id] ?: false // Get the latest state
+
     Card(
         modifier = Modifier
-
             .fillMaxWidth()
             .padding(8.dp)
             .shadow(
@@ -166,17 +181,42 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                 modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                Button(
-
-                    onClick = {
-                        navController.navigate("makeupDetail/${product.id}")
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
-                    modifier = Modifier.align(Alignment.End)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    Text("View Details", color = Color.White)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = {
+                                navController.navigate("makeupDetail/${product.id}")
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
+                        ) {
+                            Text("View Details", color = Color.White)
+                        }
+
+                        Spacer(modifier = Modifier.padding(5.dp))
+                        IconButton(
+                            onClick = {
+
+                                viewModel.updateMakeupIcon(product.id!!, db)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                contentDescription = if (isFavorite) "Unfavorite" else "Favorite",
+                                tint = Color(0xFFE91E63)
+                            )
+                        }
+                    }
                 }
-            }
+
+                }
         }
     }
 }
