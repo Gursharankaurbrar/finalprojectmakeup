@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Data Access Object (DAO) for accessing makeup data in the local Room database.
@@ -37,5 +38,11 @@ interface MakeupDao {
      **/
     @Update
     suspend fun updateMakeupState(makeup: MakeupDataItem)
+
+    /**
+     * Retrieves the favorite makeup items.
+     **/
+    @Query("SELECT * FROM makeups WHERE isFavorite = 1")
+    fun getFavoriteMakeups(): Flow<List<MakeupDataItem>>
 
 }

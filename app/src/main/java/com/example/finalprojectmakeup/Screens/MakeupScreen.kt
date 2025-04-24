@@ -1,16 +1,10 @@
 package com.example.finalprojectmakeup.Screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import com.example.finalprojectmakeup.api.MakeupManager
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import androidx.compose.foundation.lazy.items
@@ -38,11 +31,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.finalprojectmakeup.AuthViewModel
-import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.R
 import com.example.finalprojectmakeup.api.db.AppDatabase
 import androidx.compose.material3.Icon
@@ -52,8 +42,6 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 
 
@@ -76,7 +64,7 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
 
 
 @Composable
-fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager, viewModel: MakeupViewModel) {
+fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager?, viewModel: MakeupViewModel) {
     val imageUrl = if (!product.apiFeaturedImage.isNullOrEmpty()) {
         if (product.apiFeaturedImage!!.startsWith("//")) {
             "https:${product.apiFeaturedImage}"

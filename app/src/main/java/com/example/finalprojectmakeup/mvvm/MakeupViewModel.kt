@@ -3,17 +3,26 @@ package com.example.finalprojectmakeup.mvvm
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Room
 import com.example.finalprojectmakeup.api.db.AppDatabase
+import com.example.finalprojectmakeup.api.db.MakeupDao
+import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MakeupViewModel : ViewModel(){
+class MakeupViewModel(private val db: AppDatabase) : ViewModel(){
 
     // variable to keep track of the Makeup Icon state
     private val _makeupIconState = MutableStateFlow<Map<Int,Boolean>>(emptyMap())
     val makeupIconState = _makeupIconState.asStateFlow()
+
+    val favoriteMakeups: Flow<List<MakeupDataItem>> = db.makeupDao().getFavoriteMakeups()
+    fun getDatabase(): AppDatabase = db
 
     /**
      * Purpose - a function to update the  favorite state ie. true or false
@@ -22,6 +31,7 @@ class MakeupViewModel : ViewModel(){
      * @return unit
      */
     fun updateMakeupIcon(makeupID: Int, database: AppDatabase) {
+
         viewModelScope.launch(Dispatchers.IO) {
             val makeup = database.makeupDao().getMakeupById(makeupID)
 
@@ -39,6 +49,9 @@ class MakeupViewModel : ViewModel(){
             }else {
                 Log.e("MovieViewModel", "Makeup with ID $makeupID not found in database")
             }
+
+
+
         }
 
     }

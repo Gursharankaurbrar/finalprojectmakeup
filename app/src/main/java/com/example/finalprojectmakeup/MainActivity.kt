@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -73,9 +74,17 @@ class MainActivity : ComponentActivity() {
 
                     val db = AppDatabase.getInstance(applicationContext)
 
+
                     val makeupManager = MakeupManager(db)
 
-                    val viewModel: MakeupViewModel = ViewModelProvider(this)[MakeupViewModel::class.java]
+                    val viewModel: MakeupViewModel = ViewModelProvider(
+                        this,
+                        object : ViewModelProvider.Factory {
+                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                return MakeupViewModel(db) as T
+                            }
+                        }
+                    )[MakeupViewModel::class.java]
 
                     App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel, viewModel)
                 }
@@ -176,7 +185,8 @@ fun App(
                     SearchScreen()
                 }
                 composable(Destination.Watch.route) {
-                    WatchScreen()
+                    WatchScreen(viewModel = viewModel,
+                        navController = navController)
                 }
                 composable(Destination.MakeupDetail.route) { navBackStackEntry ->
                     val makeupId: String? = navBackStackEntry.arguments?.getString("makeupID")
