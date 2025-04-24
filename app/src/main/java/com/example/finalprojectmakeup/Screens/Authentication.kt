@@ -76,7 +76,6 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
 
                 Spacer(modifier = androidx.compose.ui.Modifier.height(24.dp))
 
-
                 TextField(
                     value = email,
                     onValueChange = { email = it },

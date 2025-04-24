@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.Screens.AuthenticationScreen
@@ -83,29 +84,43 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App(navController: NavHostController, modifier: Modifier, makeupManager: MakeupManager, db: AppDatabase, authViewModel: AuthViewModel){
-    var makeup by remember{
+fun App(
+    navController: NavHostController,
+    modifier: Modifier,
+    makeupManager: MakeupManager,
+    db: AppDatabase,
+    authViewModel: AuthViewModel
+) {
+    var makeup by remember {
         mutableStateOf<MakeupDataItem?>(null)
     }
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
+    val showBottomBar = currentRoute !in listOf(
+        Destination.Login.route,
+        Destination.Authentication.route
+    )
 
     val startDestination = if (authViewModel.isUserLoggedIn) {
         Destination.Makeup.route
     } else {
-        Destination.Authentication.route
+        Destination.Login.route
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(
-                    "Makeup Final Project 2025",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
-                )},
+                title = {
+                    Text(
+                        "Makeup Final Project 2025",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 actions = {
-                    if (authViewModel.isUserLoggedIn){
+                    if (authViewModel.isUserLoggedIn) {
                         Button(
                             onClick = {
                                 authViewModel.signOut()
@@ -122,42 +137,45 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                             Text("Logout", fontWeight = FontWeight.Bold)
                         }
                     }
-                    }
-                    ,
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF8B1A3C)
                 )
             )
         },
         bottomBar = {
-            BottomNav(navController = navController)
+            if (showBottomBar) {
+                BottomNav(navController = navController)
+            }
         }
-    ){ paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues).fillMaxSize().background(Color(0xFF8B1A3C))) {
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .background(Color(0xFF8B1A3C))
+        ) {
             NavHost(
                 navController = navController,
                 startDestination = startDestination
-
-            ){
+            ) {
                 composable(Destination.Login.route) {
                     LoginScreen(navController, authViewModel)
                 }
-                composable(Destination.Authentication.route){
+                composable(Destination.Authentication.route) {
                     AuthenticationScreen(navController, authViewModel)
                 }
-                composable(Destination.Makeup.route){
+                composable(Destination.Makeup.route) {
                     MakeupScreen(modifier, makeupManager, navController, db, authViewModel)
                 }
-                composable(Destination.Search.route){
+                composable(Destination.Search.route) {
                     SearchScreen()
                 }
-                composable(Destination.Watch.route){
+                composable(Destination.Watch.route) {
                     WatchScreen()
                 }
-                composable(Destination.MakeupDetail.route){navBackStackEntry ->
-
+                composable(Destination.MakeupDetail.route) { navBackStackEntry ->
                     val makeupId: String? = navBackStackEntry.arguments?.getString("makeupID")
-
 
                     LaunchedEffect(makeupId) {
                         if (makeupId != null) {
@@ -166,14 +184,17 @@ fun App(navController: NavHostController, modifier: Modifier, makeupManager: Mak
                             }
                         }
                     }
+
                     makeup?.let { item ->
-                        MakeupDetailScreen(  makeupDataItem = item, db=db, navController = navController)
+                        MakeupDetailScreen(
+                            makeupDataItem = item,
+                            db = db,
+                            navController = navController
+                        )
                     }
                 }
-                }
-
             }
         }
     }
-
+}
 
