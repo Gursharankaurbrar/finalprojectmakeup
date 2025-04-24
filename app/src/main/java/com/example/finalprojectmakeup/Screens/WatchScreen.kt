@@ -56,6 +56,7 @@ fun WatchScreen(
                     db = viewModel.getDatabase(),
                     viewModel = viewModel,
                     makeupManager = null
+
                 )
             }
         }

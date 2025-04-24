@@ -24,6 +24,8 @@ class MakeupViewModel(private val db: AppDatabase) : ViewModel(){
     val favoriteMakeups: Flow<List<MakeupDataItem>> = db.makeupDao().getFavoriteMakeups()
     fun getDatabase(): AppDatabase = db
 
+
+
     /**
      * Purpose - a function to update the  favorite state ie. true or false
      * @params makeupID: Int - represent the makeupID
@@ -49,7 +51,6 @@ class MakeupViewModel(private val db: AppDatabase) : ViewModel(){
             }else {
                 Log.e("MovieViewModel", "Makeup with ID $makeupID not found in database")
             }
-
 
 
         }

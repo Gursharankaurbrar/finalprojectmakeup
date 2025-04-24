@@ -201,6 +201,8 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                                 tint = Color(0xFFE91E63)
                             )
                         }
+
+
                     }
                 }
 

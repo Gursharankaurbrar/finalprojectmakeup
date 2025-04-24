@@ -45,4 +45,7 @@ interface MakeupDao {
     @Query("SELECT * FROM makeups WHERE isFavorite = 1")
     fun getFavoriteMakeups(): Flow<List<MakeupDataItem>>
 
+
+
+
 }
