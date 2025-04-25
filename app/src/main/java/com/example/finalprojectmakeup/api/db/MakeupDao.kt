@@ -1,6 +1,7 @@
 package com.example.finalprojectmakeup.api.db
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -50,5 +51,14 @@ interface MakeupDao {
      **/
     @Query("SELECT * FROM makeups WHERE name LIKE :query OR brand LIKE :query")
     suspend fun searchMakeups(query: String): List<MakeupDataItem>
+
+    /**
+     * Deletes the  makeup items
+     **/
+    @Delete
+    suspend fun deleteMakeup(makeup: MakeupDataItem)
+
+    @Query("DELETE FROM makeups WHERE id = :makeupID")
+    suspend fun deleteMakeup(makeupID: Int)
 
 }

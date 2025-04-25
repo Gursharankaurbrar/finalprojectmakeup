@@ -30,6 +30,11 @@ class MakeupViewModel(private val db: AppDatabase) : ViewModel(){
     val favoriteMakeups: Flow<List<MakeupDataItem>> = db.makeupDao().getFavoriteMakeups()
     fun getDatabase(): AppDatabase = db
 
+    fun deleteMakeup(makeupID: Int, database: AppDatabase) {
+        viewModelScope.launch(Dispatchers.IO) {
+            database.makeupDao().deleteMakeup(makeupID)
+        }
+    }
 
 
     /**

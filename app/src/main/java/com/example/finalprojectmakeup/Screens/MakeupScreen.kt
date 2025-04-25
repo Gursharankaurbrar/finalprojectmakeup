@@ -38,10 +38,16 @@ import com.example.finalprojectmakeup.api.db.AppDatabase
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.AlertDialog
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 
 
@@ -52,7 +58,8 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
 
 
     if (makeups.isEmpty()) {
-        Text("No makeup products available")
+        Text("No makeup products available", color = Color.White)
+
     } else {
         LazyColumn {
             items(makeups) { makeup ->
@@ -65,6 +72,35 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
 
 @Composable
 fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager?, viewModel: MakeupViewModel) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Delete Product") },
+            text = { Text("Are you sure you want to delete this product?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.deleteMakeup(product.id!!, db)
+                        showDeleteDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63))
+                ) {
+                    Text("Delete")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showDeleteDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     val imageUrl = if (!product.apiFeaturedImage.isNullOrEmpty()) {
         if (product.apiFeaturedImage!!.startsWith("//")) {
             "https:${product.apiFeaturedImage}"
@@ -189,9 +225,23 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                         }
 
                         Spacer(modifier = Modifier.padding(5.dp))
+
+                        // Delete Icon
+                        IconButton(
+
+                                onClick = { showDeleteDialog = true }
+
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Delete,
+                                contentDescription = "Delete",
+                                tint = Color(0xFFE91E63)
+                            )
+
+                        }
+
                         IconButton(
                             onClick = {
-
                                 viewModel.updateMakeupIcon(product.id!!, db)
                             }
                         ) {
@@ -201,7 +251,6 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                                 tint = Color(0xFFE91E63)
                             )
                         }
-
 
                     }
                 }
