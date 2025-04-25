@@ -1,19 +1,25 @@
 package com.example.finalprojectmakeup.mvvm
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
+import com.example.finalprojectmakeup.api.Api
 import com.example.finalprojectmakeup.api.db.AppDatabase
 import com.example.finalprojectmakeup.api.db.MakeupDao
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MakeupViewModel(private val db: AppDatabase) : ViewModel(){
 

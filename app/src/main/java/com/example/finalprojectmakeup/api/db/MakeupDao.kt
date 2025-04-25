@@ -45,7 +45,10 @@ interface MakeupDao {
     @Query("SELECT * FROM makeups WHERE isFavorite = 1")
     fun getFavoriteMakeups(): Flow<List<MakeupDataItem>>
 
-
-
+    /**
+     * Retrieves the searched makeup items
+     **/
+    @Query("SELECT * FROM makeups WHERE name LIKE :query OR brand LIKE :query")
+    suspend fun searchMakeups(query: String): List<MakeupDataItem>
 
 }

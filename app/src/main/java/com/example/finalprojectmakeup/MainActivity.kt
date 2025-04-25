@@ -50,6 +50,7 @@ import com.example.finalprojectmakeup.api.db.AppDatabase
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import com.example.finalprojectmakeup.api.model.ProductColor
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
+import com.example.finalprojectmakeup.mvvm.SearchViewModel
 import com.example.finalprojectmakeup.ui.theme.FinalProjectMakeupTheme
 import com.example.movieproject.Navigation.BottomNav
 import com.google.firebase.Firebase
@@ -86,7 +87,16 @@ class MainActivity : ComponentActivity() {
                         }
                     )[MakeupViewModel::class.java]
 
-                    App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel, viewModel)
+                    val searchViewModel: SearchViewModel = ViewModelProvider(
+                        this,
+                        object : ViewModelProvider.Factory {
+                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                return SearchViewModel(db) as T
+                            }
+                        }
+                    )[SearchViewModel::class.java]
+
+                    App( navController = navController, modifier = Modifier.padding(innerPadding), makeupManager, db, authViewModel, viewModel, searchViewModel)
                 }
             }
         }
@@ -102,7 +112,8 @@ fun App(
     makeupManager: MakeupManager,
     db: AppDatabase,
     authViewModel: AuthViewModel,
-    viewModel: MakeupViewModel
+    viewModel: MakeupViewModel,
+    searchViewModel: SearchViewModel
 ) {
     var makeup by remember {
         mutableStateOf<MakeupDataItem?>(null)
@@ -182,7 +193,10 @@ fun App(
                     MakeupScreen(modifier, makeupManager, navController, db, authViewModel,  viewModel = viewModel)
                 }
                 composable(Destination.Search.route) {
-                    SearchScreen()
+                    SearchScreen( navController = navController,
+                        db = db,
+                        makeupViewModel = viewModel,
+                        searchViewModel = searchViewModel)
                 }
                 composable(Destination.Watch.route) {
                     WatchScreen(viewModel = viewModel,
