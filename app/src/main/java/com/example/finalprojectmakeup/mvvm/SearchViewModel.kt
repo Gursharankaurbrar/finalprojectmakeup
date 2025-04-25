@@ -24,4 +24,5 @@ class SearchViewModel(private val db: AppDatabase) : ViewModel() {
             }
         }
     }
+
 }

@@ -57,8 +57,9 @@ class MakeupManager(database: AppDatabase) {
         database.makeupDao().insertAll(makeups)
     }
 
-    suspend fun refreshMakeups(){
-        var makeups = db.makeupDao().getAllMakeup()
+    suspend fun refreshMakeups() {
+        val makeups = db.makeupDao().getAllMakeup()
+        Log.d("DEBUG", "Refreshed data: ${makeups.size} items")
         _makeupResponse.value = makeups
     }
 }

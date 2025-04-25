@@ -42,6 +42,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,6 +50,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -82,7 +86,12 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
             confirmButton = {
                 Button(
                     onClick = {
-                        viewModel.deleteMakeup(product.id!!, db)
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            db.makeupDao().deleteMakeup(product.id!!)
+                            makeupManager?.refreshMakeups()
+
+                        }
                         showDeleteDialog = false
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63))
@@ -201,8 +210,8 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                         }
                         append(product.productType.orEmpty())
                     },
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
+                    color = Color.Black,
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 Row(
@@ -229,7 +238,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                         // Delete Icon
                         IconButton(
 
-                                onClick = { showDeleteDialog = true }
+                            onClick = { showDeleteDialog = true }
 
                         ) {
                             Icon(
@@ -255,7 +264,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                     }
                 }
 
-                }
+            }
         }
     }
 }

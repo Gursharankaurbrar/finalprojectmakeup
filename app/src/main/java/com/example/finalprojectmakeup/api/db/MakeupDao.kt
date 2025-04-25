@@ -52,11 +52,7 @@ interface MakeupDao {
     @Query("SELECT * FROM makeups WHERE name LIKE :query OR brand LIKE :query")
     suspend fun searchMakeups(query: String): List<MakeupDataItem>
 
-    /**
-     * Deletes the  makeup items
-     **/
-    @Delete
-    suspend fun deleteMakeup(makeup: MakeupDataItem)
+
 
     @Query("DELETE FROM makeups WHERE id = :makeupID")
     suspend fun deleteMakeup(makeupID: Int)
