@@ -135,7 +135,7 @@ fun SearchScreen(
                         performSearch(searchQuery, searchViewModel, keyboardController, focusManager)
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE91E63),
+                        containerColor = Color(0xFFD81B60),
                         contentColor = Color.White
                     ),
                     modifier = Modifier.height(56.dp) // Match TextField height
@@ -244,7 +244,7 @@ fun SearchMakeupCard(product: MakeupDataItem, navController: NavController, db: 
                 Text(
                     text = "Brand: ${product.brand.orEmpty()}",
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFE91E63),
+                    color = Color(0xFF9C144D),
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
@@ -301,7 +301,7 @@ fun SearchMakeupCard(product: MakeupDataItem, navController: NavController, db: 
                             onClick = {
                                 navController.navigate("makeupDetail/${product.id}")
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60)),
                         ) {
                             Text("View Details", color = Color.White)
                         }

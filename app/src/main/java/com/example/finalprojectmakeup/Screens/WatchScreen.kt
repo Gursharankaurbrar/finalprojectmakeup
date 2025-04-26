@@ -39,7 +39,7 @@ fun WatchScreen(
         ) {
             Text(
                 "No favorites yet!",
-                color = Color(0xFFE91E63),
+                color = Color(0xFF9C144D),
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )

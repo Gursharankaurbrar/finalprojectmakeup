@@ -99,7 +99,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                         }
                         showDeleteDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
                 ) {
                     Text("Delete")
                 }
@@ -107,7 +107,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
             dismissButton = {
                 Button(
                     onClick = { showDeleteDialog = false },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
                 ) {
                     Text("Cancel")
                 }
@@ -149,7 +149,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                             showEditDialog = false
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
                 ) {
                     Text("Save")
                 }
@@ -157,7 +157,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
             dismissButton = {
                 Button(
                     onClick = { showEditDialog = false },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
                 ) {
                     Text("Cancel")
                 }
@@ -227,7 +227,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                 Text(
                     text = "Brand: ${product.brand.orEmpty()}",
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFE91E63),
+                    color = Color(0xFF9C144D),
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
@@ -284,7 +284,7 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                             onClick = {
                                 navController.navigate("makeupDetail/${product.id}")
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60)),
                         ) {
                             Text("Details", color = Color.White)
                         }

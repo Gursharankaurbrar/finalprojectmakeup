@@ -69,7 +69,7 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
             ) {
                 Text(
                     text = "Welcome to GlamGuide",
-                    color = Color(0xFFE91E63),
+                    color = Color(0xFF9C144D),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
@@ -79,11 +79,11 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                 TextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
+                    label = { Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFF9C144D)) },
                     colors = TextFieldDefaults.colors(
-                        cursorColor = Color(0xFFE91E63),
+                        cursorColor = Color(0xFFC2185B),
                         focusedIndicatorColor = Color(0xFF8B0000),
-                        unfocusedIndicatorColor = Color(0x80E91E63),
+                        unfocusedIndicatorColor = Color(0xFFC2185B),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         focusedContainerColor = Color.Transparent,
@@ -96,11 +96,11 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                 TextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
+                    label = { Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFF9C144D)) },
                     colors = TextFieldDefaults.colors(
-                        cursorColor = Color(0xFFE91E63),
+                        cursorColor = Color(0xFFC2185B),
                         focusedIndicatorColor = Color(0xFF8B0000),
-                        unfocusedIndicatorColor = Color(0x80E91E63),
+                        unfocusedIndicatorColor = Color(0xFFC2185B),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         focusedContainerColor = Color.Transparent,
@@ -114,11 +114,11 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                 TextField(
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
-                    label = { Text("Confirm Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63)) },
+                    label = { Text("Confirm Password", fontWeight = FontWeight.Bold, color = Color(0xFF9C144D)) },
                     colors = TextFieldDefaults.colors(
-                        cursorColor = Color(0xFFE91E63),
+                        cursorColor = Color(0xFFC2185B),
                         focusedIndicatorColor = Color(0xFF8B0000),
-                        unfocusedIndicatorColor = Color(0x80E91E63),
+                        unfocusedIndicatorColor = Color(0xFFC2185B),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         focusedContainerColor = Color.Transparent,
@@ -175,7 +175,7 @@ fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewMo
                         navController.navigate(Destination.Login.route)
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE91E63)
+                        containerColor = Color(0xFFC2185B)
                     ),
                     modifier = androidx.compose.ui.Modifier.fillMaxWidth()
                 ) {

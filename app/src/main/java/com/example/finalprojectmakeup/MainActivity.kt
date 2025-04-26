@@ -152,7 +152,7 @@ fun App(
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.White,
-                                contentColor = Color(0xFFE91E63)
+                                contentColor = Color(0xFF9C144D)
                             ),
                             modifier = Modifier
                                 .height(36.dp)

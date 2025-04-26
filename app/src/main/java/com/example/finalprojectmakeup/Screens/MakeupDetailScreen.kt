@@ -116,13 +116,13 @@ fun MakeupDetailScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_back),
                             contentDescription = "Back",
-                            tint = Color(0xFFE91E63)
+                            tint = Color(0xFF9C144D)
                         )
                     }
 
                     Text(
                         text = "Product Details",
-                        color = Color(0xFFE91E63),
+                        color = Color(0xFF9C144D),
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
                         modifier = Modifier.align(Alignment.Center)
@@ -137,7 +137,7 @@ fun MakeupDetailScreen(
                         Icon(
                             imageVector = Icons.Default.Share,
                             contentDescription = "Share",
-                            tint = Color(0xFFE91E63)
+                            tint = Color(0xFF9C144D)
                         )
                     }
                 }
@@ -201,7 +201,7 @@ fun MakeupDetailScreen(
                 ) {
                     Text(
                         text = makeupDataItem.name ?: "No name available",
-                        color = Color(0xFFE91E63),
+                        color = Color(0xFF9C144D),
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp,
                         modifier = Modifier.padding(bottom = 8.dp)
@@ -281,7 +281,7 @@ fun MakeupDetailScreen(
                                 viewModel.updateMakeupIcon(makeupDataItem.id!!, db)
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFE91E63)
+                                containerColor = Color(0xFFD81B60)
                             ),
                             modifier = Modifier.weight(1f)
                                 .padding(end = 8.dp)
@@ -292,7 +292,7 @@ fun MakeupDetailScreen(
                         Button(
                             onClick = {  },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFE91E63)
+                                containerColor = Color(0xFFD81B60)
                             ),
                             modifier = Modifier.weight(1f)
                                 .padding(start = 8.dp)

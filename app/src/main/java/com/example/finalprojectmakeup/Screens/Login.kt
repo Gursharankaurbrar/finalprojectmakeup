@@ -93,7 +93,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
                 Text(
                     text = "Welcome Back to GlamGuide",
-                    color = Color(0xFFE91E63),
+                    color = Color(0xFF9C144D),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
@@ -105,7 +105,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
                     value = email,
                     onValueChange = { email = it },
                     label = {
-                        Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63))
+                        Text("Email", fontWeight = FontWeight.Bold, color = Color(0xFF9C144D))
                     },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
@@ -125,7 +125,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
                     value = password,
                     onValueChange = { password = it },
                     label = {
-                        Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFFE91E63))
+                        Text("Password", fontWeight = FontWeight.Bold, color = Color(0xFF9C144D))
                     },
                     colors = TextFieldDefaults.colors(
                         cursorColor = Color(0xFFE91E63),
@@ -166,7 +166,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE91E63)
+                        containerColor = Color(0xFFD81B60)
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -198,7 +198,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
                     )
                     Text(
                         text = "OR",
-                        color = Color(0xFFE91E63),
+                        color = Color(0xFF9C144D),
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
                     HorizontalDivider(
