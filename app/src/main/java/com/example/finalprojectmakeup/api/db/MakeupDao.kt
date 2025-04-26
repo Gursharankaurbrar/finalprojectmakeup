@@ -52,9 +52,15 @@ interface MakeupDao {
     @Query("SELECT * FROM makeups WHERE name LIKE :query OR brand LIKE :query")
     suspend fun searchMakeups(query: String): List<MakeupDataItem>
 
-
-
+    /**
+     * Deletes makeup item based on ID.
+     **/
     @Query("DELETE FROM makeups WHERE id = :makeupID")
     suspend fun deleteMakeup(makeupID: Int)
 
+    /**
+     * Updates the price and category of item.
+     **/
+    @Query("UPDATE makeups SET price = :price, category = :category WHERE id = :makeupID")
+    fun updateMakeup(makeupID:Int, price: String, category: String)
 }

@@ -20,6 +20,7 @@ import com.example.finalprojectmakeup.api.MakeupManager
 import com.example.finalprojectmakeup.api.model.MakeupDataItem
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -39,16 +40,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults.containerColor
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.KeyboardType
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -77,6 +81,7 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
 @Composable
 fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager?, viewModel: MakeupViewModel) {
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showEditDialog by remember { mutableStateOf(false) }
 
     if (showDeleteDialog) {
         AlertDialog(
@@ -109,6 +114,57 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
             }
         )
     }
+
+    if (showEditDialog) {
+        var newPrice by remember { mutableStateOf(product.price ?: "") }
+        var newCategory by remember { mutableStateOf(product.category ?: "") }
+
+        AlertDialog(
+            onDismissRequest = { showEditDialog = false },
+            title = { Text("Edit Product") },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = newPrice,
+                        onValueChange = { newPrice = it },
+                        label = { Text("Price") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = newCategory,
+                        onValueChange = { newCategory = it },
+                        label = { Text("Category") }
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (newPrice.isNotBlank() && newCategory.isNotBlank()) {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                db.makeupDao().updateMakeup(product.id!!, newPrice, newCategory)
+                                makeupManager?.refreshMakeups()
+                            }
+                            showEditDialog = false
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+                ) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showEditDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
 
     val imageUrl = if (!product.apiFeaturedImage.isNullOrEmpty()) {
         if (product.apiFeaturedImage!!.startsWith("//")) {
@@ -230,10 +286,25 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
                         ) {
-                            Text("View Details", color = Color.White)
+                            Text("Details", color = Color.White)
                         }
 
-                        Spacer(modifier = Modifier.padding(5.dp))
+
+                        Spacer(modifier = Modifier.padding(2.dp))
+
+                        // Edit Icon
+                        IconButton(
+
+                            onClick = { showEditDialog = true }
+
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Edit,
+                                contentDescription = "Edit",
+                                tint = Color(0xFFE91E63)
+                            )
+
+                        }
 
                         // Delete Icon
                         IconButton(
@@ -248,6 +319,10 @@ fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDat
                             )
 
                         }
+
+                        Spacer(modifier = Modifier.padding(2.dp))
+
+
 
                         IconButton(
                             onClick = {
