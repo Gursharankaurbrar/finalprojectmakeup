@@ -29,7 +29,7 @@ categorizing products and providing brand-based filtering, users can explore and
 ## Prerequisites
 - Android Studio (latest stable version). 
 - Firebase project set up with Authentication enabled. 
-- Android emulator or physical device for testing
+- Android emulator or physical device for testing.
 
 ## Steps to set up locally
 - Clone the repository.
@@ -39,15 +39,6 @@ categorizing products and providing brand-based filtering, users can explore and
 - Enable Firebase Authentication in the Firebase console.
 - Connect an Android device or start an Android emulator. 
 - Click "Run" in Android Studio to build and run the app.
-
-## How to Contribute
-Contributions are welcome! Here’s how you can contribute to the development of this app:
-- Fork the Repository: Fork this repository to your own GitHub account.
-- Create a Branch: Create a feature branch for the change you want to make.
-- Make Changes: Implement your changes or add new features in the code.
-- Commit Your Changes: Commit your changes with a clear and concise message describing what you’ve done. Example: git commit -m "Add new search functionality".
-- Push to Your Fork: Push your changes to your forked repository. Example: git push origin feature/new-feature.
-- Create a Pull Request: Submit a pull request to the main repository with a description of your changes.
 
 # Technologies Used
 ## Jetpack Compose: 
@@ -110,3 +101,12 @@ The app includes a feature to add the makeup products that you like to a favorit
 
 ## Sign Out:
 Users can sign out at any time, which will return them to the Login screen.
+
+## How to Contribute
+Contributions are welcome! Here’s how you can contribute to the development of this app:
+- Fork the Repository: Fork this repository to your own GitHub account.
+- Create a Branch: Create a feature branch for the change you want to make.
+- Make Changes: Implement your changes or add new features in the code.
+- Commit Your Changes: Commit your changes with a clear and concise message describing what you’ve done. Example: git commit -m "Add new search functionality".
+- Push to Your Fork: Push your changes to your forked repository. Example: git push origin feature/new-feature.
+- Create a Pull Request: Submit a pull request to the main repository with a description of your changes.
