@@ -178,7 +178,15 @@ fun SearchScreen(
     }
 }
 
-
+/**
+ * Purpose - Search Card - Displays individual makeup product details in a card format.
+ * @param product: MakeupDataItem - The makeup product data to display.
+ * @param navController: NavController - Navigation controller for handling navigation.
+ * @param db: AppDatabase - Database instance to interact with local data for editing or deleting the product.
+ * @param makeupManager: MakeupManager? - An instance to refresh makeup data after modifying the product.
+ * @param viewModel: MakeupViewModel - ViewModel to manage the state of the makeup product's favorite status.
+ * @return Unit
+ */
 @Composable
 fun SearchMakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager?, viewModel: MakeupViewModel) {
 

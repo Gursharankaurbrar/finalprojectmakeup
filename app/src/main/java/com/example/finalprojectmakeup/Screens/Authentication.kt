@@ -35,7 +35,14 @@ import androidx.navigation.NavController
 import com.example.finalprojectmakeup.AuthViewModel
 import com.example.finalprojectmakeup.Destinations.Destination
 
-
+/**
+ * Purpose - AuthenticationScreen - displays a registration form
+ * where users can sign up with an email and password or navigate to the login screen
+ *
+ * @param navController: NavController - used for navigating between screens
+ * @param authViewModel: AuthViewModel - handles user registration and authentication logic
+ * @return Unit
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthenticationScreen(navController: NavController, authViewModel: AuthViewModel) {

@@ -21,21 +21,31 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Purpose - MakeupViewModel - handles UI-related data for makeup products, including favorite states, database operations, and data updates
+ *
+ * @param db: AppDatabase - Room database instance for accessing makeup data
+ */
 class MakeupViewModel(private val db: AppDatabase) : ViewModel(){
 
     // variable to keep track of the Makeup Icon state
     private val _makeupIconState = MutableStateFlow<Map<Int,Boolean>>(emptyMap())
+
+    /**
+     * Purpose - Exposes the makeup icon state as a StateFlow for UI observation
+     *
+     * @return StateFlow<Map<Int, Boolean>> - map of makeup IDs to their favorite states
+     */
     val makeupIconState = _makeupIconState.asStateFlow()
 
     val favoriteMakeups: Flow<List<MakeupDataItem>> = db.makeupDao().getFavoriteMakeups()
+
+    /**
+     * Purpose - Provides access to the database instance
+     *
+     * @return AppDatabase - the Room database instance
+     */
     fun getDatabase(): AppDatabase = db
-
-    fun deleteMakeup(makeupID: Int, database: AppDatabase) {
-        viewModelScope.launch(Dispatchers.IO) {
-            database.makeupDao().deleteMakeup(makeupID)
-        }
-    }
-
 
     /**
      * Purpose - a function to update the  favorite state ie. true or false

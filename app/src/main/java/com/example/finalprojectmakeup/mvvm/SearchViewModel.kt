@@ -10,10 +10,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Purpose - SearchViewModel - manages search functionality for makeup products
+ *
+ * @param db: AppDatabase - Room database instance used to perform search queries
+ */
 class SearchViewModel(private val db: AppDatabase) : ViewModel() {
     private val _searchResults = MutableStateFlow<List<MakeupDataItem>>(emptyList())
     val searchResults: StateFlow<List<MakeupDataItem>> = _searchResults.asStateFlow()
 
+    /**
+     * Purpose - Searches makeup products by a given query string
+     *
+     * @param query: String - the search keyword to filter makeup products
+     * @return Unit
+     */
     fun searchMakeups(query: String) {
         viewModelScope.launch {
             if (query.isNotBlank()) {

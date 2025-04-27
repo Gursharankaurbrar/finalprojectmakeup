@@ -15,7 +15,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.finalprojectmakeup.Destinations.Destination
 import com.example.finalprojectmakeup.R
 
-
+/**
+ * Purpose - BottomNav - displays a bottom navigation bar with icons to navigate
+ * between Makeup, Search, and Favorites screens
+ *
+ * @param navController: NavController - controller to manage screen navigation
+ * @return Unit
+ */
 @Composable
 fun BottomNav(navController: NavController){
     NavigationBar(

@@ -60,7 +60,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
+/**
+ * MainActivity serves as the entry point of the app. It handles Firebase initialization,
+ * authentication state management, and sets up the navigation graph.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +106,17 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * The App composable is the root composable that sets up the entire app's UI structure.
+ * @param navController: NavHostController - A controller for navigating between screens.
+ * @param modifier: Modifier - A modifier to apply styles and adjustments to the composable.
+ * @param makeupManager: MakeupManager - A manager for handling makeup-related data.
+ * @param db: AppDatabase - The local database instance for interacting with stored data.
+ * @param authViewModel: AuthViewModel - The view model for handling user authentication.
+ * @param viewModel: MakeupViewModel - The view model for handling makeup-related data and logic.
+ * @param searchViewModel: SearchViewModel - The view model for handling search functionality.
+ * @return Unit
+ */
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

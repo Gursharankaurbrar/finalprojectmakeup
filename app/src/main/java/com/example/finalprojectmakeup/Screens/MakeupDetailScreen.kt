@@ -52,7 +52,16 @@ import androidx.compose.runtime.getValue
 import coil3.compose.AsyncImage
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 
-
+/**
+ * MakeupDetailScreen displays detailed information about a selected makeup product.
+ *
+ * @param modifier Modifier to be applied to the screen layout.
+ * @param makeupDataItem The selected MakeupDataItem containing product details.
+ * @param db Instance of AppDatabase to perform database operations like saving favorites.
+ * @param navController Optional NavController for handling back navigation.
+ * @param viewModel The MakeupViewModel that manages UI-related data and events.
+ * @return A Composable UI screen displaying the detailed view of the selected makeup product.
+ * **/
 @Composable
 fun MakeupDetailScreen(
     modifier: Modifier = Modifier,
@@ -75,6 +84,11 @@ fun MakeupDetailScreen(
     val iconState by viewModel.makeupIconState.collectAsState() // Observe state from ViewModel
     var isIconChanged = iconState[makeupDataItem.id] ?: false // Get the latest state
 
+    /**
+     * Shares the product details via Android's sharing system (Intent.ACTION_SEND).
+     * @param makeupDataItem The MakeupDataItem containing the product details to share.
+     * @return Unit
+     **/
     fun shareProduct() {
         val shareText = buildString {
             append("Check out this makeup product!\n\n")

@@ -42,6 +42,14 @@ import androidx.navigation.NavController
 import com.example.finalprojectmakeup.AuthViewModel
 import com.example.finalprojectmakeup.Destinations.Destination
 
+/**
+ * Purpose - Login Screen - Displays a login form
+ * where users can sign in with an email and password or navigate to the authentication screen
+ *
+ * @param navController: NavController - used for navigating between screens
+ * @param authViewModel: AuthViewModel - handles user registration and authentication logic
+ * @return Unit
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
@@ -175,7 +183,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-
+                // Forgot password
                 Text(
                     text = "Forgot Password?",
                     color = Color(0xFF8B0000),
@@ -209,6 +217,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                // Navigation to Authentication Screen
                 Button(
                     onClick = {
                         navController.navigate(Destination.Authentication.route)
@@ -225,6 +234,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
                 val context =  LocalContext.current
 
+                // Second sign in method
                 Button(
                     onClick = {
                         authViewModel.signInAnonymously(

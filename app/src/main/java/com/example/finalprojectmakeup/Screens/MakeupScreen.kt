@@ -58,7 +58,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+/**
+ * Purpose - MakeupScreen - Displays a list of makeup products fetched from the API.
+ * @param modifier: Modifier - Modifier to customize the layout of the composable (default is Modifier).
+ * @param makeupManager: MakeupManager - Responsible for fetching makeup data from the API.
+ * @param navController: NavController - Navigation controller to manage navigation between screens.
+ * @param db: AppDatabase - Database instance for accessing and manipulating local data.
+ * @param authViewModel: AuthViewModel - ViewModel to manage user authentication state.
+ * @param viewModel: MakeupViewModel - ViewModel to manage makeup-related state and interactions.
+ * @return Unit
+ */
 @Composable
 fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, navController: NavController, db:AppDatabase, authViewModel: AuthViewModel, viewModel: MakeupViewModel){
 
@@ -77,7 +86,15 @@ fun MakeupScreen(modifier: Modifier = Modifier, makeupManager: MakeupManager, na
     }
 }
 
-
+/**
+ * Purpose - MakeupCard - Displays individual makeup product details in a card format.
+ * @param product: MakeupDataItem - The makeup product data to display.
+ * @param navController: NavController - Navigation controller for handling navigation.
+ * @param db: AppDatabase - Database instance to interact with local data for editing or deleting the product.
+ * @param makeupManager: MakeupManager? - An instance to refresh makeup data after modifying the product.
+ * @param viewModel: MakeupViewModel - ViewModel to manage the state of the makeup product's favorite status.
+ * @return Unit
+ */
 @Composable
 fun MakeupCard(product: MakeupDataItem, navController: NavController, db: AppDatabase, makeupManager: MakeupManager?, viewModel: MakeupViewModel) {
     var showDeleteDialog by remember { mutableStateOf(false) }

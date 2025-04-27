@@ -22,6 +22,15 @@ import androidx.navigation.NavController
 import com.example.finalprojectmakeup.mvvm.MakeupViewModel
 import com.example.finalprojectmakeup.api.db.AppDatabase
 
+/**
+ * Purpose - Watch Screen - to display a list of makeup products that the user has favorited.
+ *
+ * @param modifier: Modifier - to modify the layout and appearance of the composable
+ * @param viewModel: MakeupViewModel - ViewModel responsible for managing makeup-related data, including the list of favorite products
+ * @param navController: NavController - used to handle navigation between screens
+ *
+ * @return Unit
+ */
 @Composable
 fun WatchScreen(
     modifier: Modifier = Modifier,
