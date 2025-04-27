@@ -1,4 +1,4 @@
-# Mobile Application Development Final Project 
-## ADEV-3007(261249)
-# Author: Gursharan Kaur Brar
-g
+# Makeup Final Project 
+## Mobile App Development ADEV-3007(261249)
+# Author
+## Gursharan Kaur Brar
