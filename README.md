@@ -14,11 +14,16 @@ categorizing products and providing brand-based filtering, users can explore and
 
 # Setup and Installation
 ## About the Makeup API :
-Here is the link for the API: http://makeup-api.herokuapp.com/
-Protocol: The transport is HTTP. This API conforms to REST principals
-API Endpoints: The endpoint for the current API version is:
+- Here is the link for the API: http://makeup-api.herokuapp.com/   
+
+- Protocol: The transport is HTTP. This API conforms to REST principals.  
+
+API Endpoints: The endpoint for the current API version is:  
+
 http://makeup-api.herokuapp.com/api/v1/products.json
-There is currently one API call: Search makeup products
-Type: GET
+There is currently one API call: Search makeup products  
+
+Type: GET  
+
 Response Format: json
 
