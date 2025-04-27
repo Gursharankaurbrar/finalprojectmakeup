@@ -1,2 +1,2 @@
-Mobile Application Development Final Project
-Author: Gursharan Kaur Brar
+# Mobile Application Development Final Project - ADEV-3007(261249)
+# Author: Gursharan Kaur Brar
