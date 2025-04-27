@@ -18,12 +18,11 @@ categorizing products and providing brand-based filtering, users can explore and
 
 - Protocol: The transport is HTTP. This API conforms to REST principals.  
 
-API Endpoints: The endpoint for the current API version is:  
+- API Endpoints: The endpoint for the current API version is: http://makeup-api.herokuapp.com/api/v1/products.json  
 
-http://makeup-api.herokuapp.com/api/v1/products.json
-There is currently one API call: Search makeup products  
+- There is currently one API call: Search makeup products  
 
-Type: GET  
+- Type: GET  
 
-Response Format: json
+- Response Format: json
 

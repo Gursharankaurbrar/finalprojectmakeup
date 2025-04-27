@@ -5,6 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+
+/**
+ Data class representing a single makeup product item from the API
+ **/
 @Entity(tableName = "makeups")
 @JsonClass(generateAdapter = true)
 data class MakeupDataItem(
